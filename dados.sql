@@ -1,11 +1,11 @@
 /* comentários sql */
-create database if not exists dados_estudantes;
-use dados_estudantes;
+create database if not exists universidade_bd;
+use universidade_bd;
 show tables;
 
 /* criação da tabale alunos */
 create table ALUNOS (
-		CPF int NOT NULL,
+	CPF int NOT NULL,
         Nome varchar(30) not null,
         DataNascimento DATE,
         Endereco varchar(100) not null,
@@ -14,16 +14,16 @@ create table ALUNOS (
 );
 
 create table Professores(
-	CPF int NOT NULL,
+    CPF int NOT NULL,
     Nome varchar(30) NOT NULL,
-	Salario decimal,
+    Salario decimal,
     CargaHoraria int,
     Endereco varchar(100) NOT NULL,
     primary key (CPF)
 );
 
 create table cursos(
-	ID int not null auto_increment,
+    ID int not null auto_increment,
     Nome varchar(50) not null,
     CargaHoraria int not null,
     CPF int not null,
@@ -32,7 +32,7 @@ create table cursos(
 );
 
 create table matriculas(
-	ID int auto_increment not null,
+    ID int auto_increment not null,
     IDAlunos int not null,
     IDCursos int not null,
     
@@ -58,11 +58,10 @@ VALUES
   ("32738163","Levi Fry","eleifend nec, malesuada ut, sem. Nulla","1456.40",29),
   ("25297994","Kaye Cameron","ante ipsum primis in","1777.97",8),
   ("34774120","Shana Baird","nisl arcu iaculis enim, sit","1477.42",45);
-select * from alunos;
 
 insert into `cursos` (`Nome`, `CargaHoraria`,`CPF`)
 values
-	("Administração", "40", "44288361"),
+    ("Administração", "40", "44288361"),
     ("ADS", "30", "32738163"),
     ("Nutrição", "35", "32738163"),
     ("Medicina", "100", "34774120");
@@ -82,10 +81,8 @@ select * from cursos;
 select * from matriculas;
 
 /* JOIN Completo da relação matriculas(alunos, cursos, professores) */ 
-select alunos.CPF, alunos.Nome, cursos.Nome as Curso, cursos.CargaHoraria ,  professores.Nome as Professor
+select matriculas.ID as Nmatricula, alunos.CPF, alunos.Nome, cursos.Nome as Curso, cursos.CargaHoraria ,  professores.Nome as Professor
 from matriculas
 inner join alunos on matriculas.IDAlunos = alunos.CPF
 inner join cursos on matriculas.IDCursos = cursos.ID
 inner join professores on cursos.CPF = professores.CPF;
-
-    
